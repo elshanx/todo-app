@@ -1,3 +1,3 @@
 ## Todos:
-* [x] add drag and drop
+* [ ] add drag and drop
 * [ ] filter items

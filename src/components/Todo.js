@@ -31,10 +31,10 @@ function TodoItem({
       if (todo.id === id) {
         setTodos([...todos], (todo.text = editedInput));
         editedInput.length === 0 && handleDelete(todo);
+        setEditedInput(editedInput);
       }
       return todo;
     });
-    setEditedInput('');
     setEditable(!editable);
   };
 

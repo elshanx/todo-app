@@ -1,12 +1,16 @@
 import '../index.css';
 import AddTodo from './AddTodo';
 import { Container } from './common';
+import SourceCode from './SourceCode';
 
 const App = () => {
   return (
-    <Container>
-      <AddTodo />
-    </Container>
+    <>
+      <SourceCode />
+      <Container>
+        <AddTodo />
+      </Container>
+    </>
   );
 };
 

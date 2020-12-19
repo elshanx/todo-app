@@ -1,12 +1,23 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import Todo from './Todo';
 import { v4 as uuid } from 'uuid';
 import { Form, Input, AddButton } from './common';
 import { TodoContext } from './TodoContext';
+import axios from 'axios';
 
 const SearchInput = () => {
   const [todos, setTodos] = useContext(TodoContext);
   const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get(
+        'https://jsonplaceholder.typicode.com/todos/'
+      );
+      setTodos(data);
+    };
+    fetchData();
+  }, [setTodos]);
 
   const handleCheckboxChange = id => {
     todos.filter(todo => {
@@ -19,7 +30,7 @@ const SearchInput = () => {
   const editTodo = (id, text) => {
     todos.map(todo => {
       if (todo.id === id)
-        return setTodos([...todos], (todo.text = text));
+        return setTodos([...todos], (todo.title = text));
       return todo;
     });
   };
@@ -35,7 +46,7 @@ const SearchInput = () => {
     inputValue.trim().length > 0 &&
       setTodos([
         ...todos,
-        { id: uuid(), text: inputValue, completed: false },
+        { id: uuid(), title: inputValue, completed: false },
       ]);
     setInputValue('');
   };
@@ -44,7 +55,7 @@ const SearchInput = () => {
     <Todo
       key={t.id}
       id={t.id}
-      text={t.text}
+      title={t.title}
       completed={t.completed}
       handleCheckboxChange={() => handleCheckboxChange(t.id)}
       editTodo={() => editTodo(t.id)}

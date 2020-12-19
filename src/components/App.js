@@ -6,12 +6,14 @@ import { TodoProvider } from './TodoContext';
 
 const App = () => {
   return (
-    <TodoProvider>
+    <>
       <SourceCode />
       <Container>
-        <AddTodo />
+        <TodoProvider>
+          <AddTodo />
+        </TodoProvider>
       </Container>
-    </TodoProvider>
+    </>
   );
 };
 

@@ -16,21 +16,21 @@ import { TodoContext } from './TodoContext';
 
 function TodoItem({
   id,
-  text,
+  title,
   completed,
   handleDelete,
   handleCheckboxChange,
 }) {
   const [todos, setTodos] = useContext(TodoContext);
   const [editable, setEditable] = useState(false);
-  const [editedInput, setEditedInput] = useState([text]);
+  const [editedInput, setEditedInput] = useState([title]);
 
   const handleSubmit = (e, id) => {
     e.preventDefault();
     setEditedInput(e.target.value);
     todos.map(todo => {
       if (todo.id === id) {
-        setTodos([...todos], (todo.text = editedInput));
+        setTodos([...todos], (todo.title = editedInput));
         editedInput.length === 0 && handleDelete(todo);
         setEditedInput(editedInput);
       }
@@ -51,7 +51,7 @@ function TodoItem({
         checked={completed}
       />
       {editable ? (
-        <Form onSubmit={e => handleSubmit(e, id, text)}>
+        <Form onSubmit={e => handleSubmit(e, id, title)}>
           <Input
             completed={completed}
             editing={editable}
@@ -63,7 +63,7 @@ function TodoItem({
           <AddButton>Edit</AddButton>
         </Form>
       ) : (
-        <Text completed={completed}>{text}</Text>
+        <Text completed={completed}>{title}</Text>
       )}
       <EditButton onClick={handleEditClick}>
         <GrEdit />

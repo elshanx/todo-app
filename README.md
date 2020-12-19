@@ -3,4 +3,4 @@
 * [ ] filter items
 * [x] add global state
 * [x] editable todos
-* [*] fetch todos from some api afterwards
+* [x] fetch todos from some api afterwards

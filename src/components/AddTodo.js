@@ -1,45 +1,17 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Todo from './Todo';
 import { v4 as uuid } from 'uuid';
 import { Form, Input, AddButton } from './common';
+import { TodoContext } from './TodoContext';
 
 const SearchInput = () => {
-  const [todos, setTodos] = useState([
-    {
-      id: uuid(),
-      text: 'Learn React Redux',
-      completed: true,
-    },
-    {
-      id: uuid(),
-      text: 'Learn Nodejs',
-      completed: false,
-    },
-    {
-      id: uuid(),
-      text: 'Watch all Tarkovsky Movies',
-      completed: true,
-    },
-    {
-      id: uuid(),
-      text: 'Read at least 30 books this year',
-      completed: true,
-    },
-    {
-      id: uuid(),
-      text: 'Have one big project by the end of 2020',
-      completed: false,
-    },
-  ]);
+  const [todos, setTodos] = useContext(TodoContext);
   const [inputValue, setInputValue] = useState('');
 
   const handleCheckboxChange = id => {
-    todos.map(todo => {
-      if (todo.id === id)
-        return setTodos(
-          [...todos],
-          (todo.completed = !todo.completed)
-        );
+    todos.filter(todo => {
+      todo.id === id &&
+        setTodos([...todos], (todo.completed = !todo.completed));
       return todo;
     });
   };
@@ -79,8 +51,6 @@ const SearchInput = () => {
       handleDelete={() => handleDelete(t.id)}
       inputValue={inputValue}
       setInputValue={setInputValue}
-      todos={todos}
-      setTodos={setTodos}
     />
   ));
 

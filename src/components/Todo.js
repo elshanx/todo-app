@@ -10,7 +10,9 @@ import {
   AddButton,
   Form,
 } from './common';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+
+import { TodoContext } from './TodoContext';
 
 function TodoItem({
   id,
@@ -18,9 +20,8 @@ function TodoItem({
   completed,
   handleDelete,
   handleCheckboxChange,
-  setTodos,
-  todos,
 }) {
+  const [todos, setTodos] = useContext(TodoContext);
   const [editable, setEditable] = useState(false);
   const [editedInput, setEditedInput] = useState([text]);
 

@@ -2,44 +2,39 @@ import { GrEdit } from 'react-icons/gr';
 import { IoTrashBin } from 'react-icons/io5';
 import {
   Input,
-  Text,
   Todos,
   Checkbox,
   DeleteButton,
   EditButton,
   AddButton,
-  Form,
-} from './common';
-import { useState, useContext } from 'react';
+} from '../common';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import {
+  DELETE_TODO,
+  EDIT_TODO,
+  TOGGLE_COMPLETED,
+} from '../redux/actionTypes';
 
-import { TodoContext } from './TodoContext';
-
-function TodoItem({
-  id,
-  title,
-  completed,
-  handleDelete,
-  handleCheckboxChange,
-}) {
-  const [todos, setTodos] = useContext(TodoContext);
+const Todo = ({ title, id, completed }) => {
   const [editable, setEditable] = useState(false);
   const [editedInput, setEditedInput] = useState([title]);
+  const dispatch = useDispatch();
 
-  const handleSubmit = (e, id) => {
-    e.preventDefault();
-    setEditedInput(e.target.value);
-    todos.map(todo => {
-      if (todo.id === id) {
-        setTodos([...todos], (todo.title = editedInput));
-        editedInput.length === 0 && handleDelete(todo);
-        setEditedInput(editedInput);
-      }
-      return todo;
-    });
-    setEditable(!editable);
+  const handleToggleClick = () => {
+    dispatch({ type: TOGGLE_COMPLETED, payload: id });
   };
 
-  const handleEditClick = () => {
+  const handleDelete = () => {
+    dispatch({ type: DELETE_TODO, payload: id });
+  };
+
+  const handleEditSubmit = e => {
+    e.preventDefault();
+    dispatch({
+      type: EDIT_TODO,
+      payload: { title: editedInput, id: id },
+    });
     setEditable(!editable);
   };
 
@@ -47,25 +42,24 @@ function TodoItem({
     <Todos>
       <Checkbox
         type='checkbox'
-        onChange={handleCheckboxChange}
         checked={completed}
+        onChange={handleToggleClick}
       />
-      {editable ? (
-        <Form onSubmit={e => handleSubmit(e, id, title)}>
+      {!editable ? (
+        <h2>{title}</h2>
+      ) : (
+        <form onSubmit={handleEditSubmit}>
           <Input
             completed={completed}
             editing={editable}
             onChange={e => setEditedInput(e.target.value)}
             value={editedInput}
-            placeholder={editedInput}
             autoFocus // because I am a kind person :)
           />
-          <AddButton>Edit</AddButton>
-        </Form>
-      ) : (
-        <Text completed={completed}>{title}</Text>
+          <AddButton type='submit'>Edit</AddButton>
+        </form>
       )}
-      <EditButton onClick={handleEditClick}>
+      <EditButton onClick={() => setEditable(!editable)}>
         <GrEdit />
       </EditButton>
       <DeleteButton onClick={handleDelete}>
@@ -73,6 +67,6 @@ function TodoItem({
       </DeleteButton>
     </Todos>
   );
-}
+};
 
-export default TodoItem;
+export default Todo;

@@ -13,8 +13,6 @@ export const Container = styled.div`
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), 0 10px 0 -5px #eee;
 `;
 
-export const Form = styled.form``; // maybe one day i will style it..
-
 export const AddButton = styled.button`
   width: 8rem;
   padding: 15px;

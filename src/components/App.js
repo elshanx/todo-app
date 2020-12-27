@@ -1,19 +1,14 @@
 import '../index.css';
+import { Container } from '../common';
 import AddTodo from './AddTodo';
-import { Container } from './common';
-import SourceCode from './SourceCode';
-import { TodoProvider } from './TodoContext';
+import Todolist from './Todolist';
 
 const App = () => {
   return (
-    <>
-      <SourceCode />
-      <Container>
-        <TodoProvider>
-          <AddTodo />
-        </TodoProvider>
-      </Container>
-    </>
+    <Container>
+      <AddTodo />
+      <Todolist />
+    </Container>
   );
 };
 

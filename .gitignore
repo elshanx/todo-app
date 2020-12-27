@@ -23,4 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 webpack.config.js
 .vscode
-src/icons
+src/components/Filters.js
+design

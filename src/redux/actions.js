@@ -3,7 +3,7 @@ import {
   DELETE_TODO,
   TOGGLE_COMPLETED,
   EDIT_TODO,
-  SET_FILTER,
+  SET_VISIBILITY_FILTER,
 } from './actionTypes';
 
 export const addTodo = (id, title, completed) => ({
@@ -27,6 +27,6 @@ export const editTodo = (title, id) => ({
 });
 
 export const setFilter = filter => ({
-  type: SET_FILTER,
+  type: SET_VISIBILITY_FILTER,
   payload: { filter },
 });

@@ -58,7 +58,6 @@ export const Todos = styled.div`
 
 export const Checkbox = styled.input`
   margin-right: 10px;
-  /* font-size: 50px; */
 
   &:focus {
     outline: 1;

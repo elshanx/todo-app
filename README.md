@@ -1,8 +1,9 @@
 ## Todos:
 * [ ] add drag and drop
-* [ ] filter items (visibility filters)
+* [ ] filter visible items
 * [x] add global state
-  * [x] implemented use Context API
+  * [x] implemented Context API
   * [x] implemented Reduxjs
 * [x] add editable todos
 * [x] fetch todos from some API
+* [ ] add typescript

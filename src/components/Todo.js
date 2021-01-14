@@ -1,5 +1,8 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { GrEdit } from 'react-icons/gr';
 import { IoTrashBin } from 'react-icons/io5';
+
 import {
   Input,
   Todos,
@@ -8,43 +11,25 @@ import {
   EditButton,
   AddButton,
 } from '../common';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {
-  DELETE_TODO,
-  EDIT_TODO,
-  TOGGLE_COMPLETED,
-} from '../redux/actionTypes';
+import { deleteTodo, editTodo, toggleTodo } from '../redux/actions';
 
 const Todo = ({ title, id, completed }) => {
   const [editable, setEditable] = useState(false);
   const [editedInput, setEditedInput] = useState([title]);
   const dispatch = useDispatch();
 
-  const handleToggleClick = () => {
-    dispatch({ type: TOGGLE_COMPLETED, payload: id });
-  };
+  const handleToggleClick = () => dispatch(toggleTodo(id));
+  const handleDelete = () => dispatch(deleteTodo(id));
 
-  const handleDelete = () => {
-    dispatch({ type: DELETE_TODO, payload: id });
-  };
-
-  const handleEditSubmit = e => {
+  const handleEditSubmit = (e) => {
     e.preventDefault();
-    dispatch({
-      type: EDIT_TODO,
-      payload: { title: editedInput, id: id },
-    });
+    dispatch(editTodo(editedInput, id));
     setEditable(!editable);
   };
 
   return (
     <Todos>
-      <Checkbox
-        type='checkbox'
-        checked={completed}
-        onChange={handleToggleClick}
-      />
+      <Checkbox type='checkbox' checked={completed} onChange={handleToggleClick} />
       {!editable ? (
         <h2>{title}</h2>
       ) : (
@@ -52,9 +37,9 @@ const Todo = ({ title, id, completed }) => {
           <Input
             completed={completed}
             editing={editable}
-            onChange={e => setEditedInput(e.target.value)}
+            onChange={(e) => setEditedInput(e.target.value)}
             value={editedInput}
-            autoFocus // because I am a kind person :)
+            autoFocus
           />
           <AddButton type='submit'>Edit</AddButton>
         </form>

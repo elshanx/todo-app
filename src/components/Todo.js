@@ -11,29 +11,30 @@ import {
   EditButton,
   AddButton,
 } from '../common';
-import { deleteTodo, editTodo, toggleTodo } from '../redux/actions';
+import { toggle, remove, edit } from '../rtk/todosSlice';
 
 const Todo = ({ title, id, completed }) => {
   const [editable, setEditable] = useState(false);
   const [editedInput, setEditedInput] = useState([title]);
   const dispatch = useDispatch();
 
-  const handleToggleClick = () => dispatch(toggleTodo(id));
-  const handleDelete = () => dispatch(deleteTodo(id));
-
   const handleEditSubmit = (e) => {
     e.preventDefault();
-    dispatch(editTodo(editedInput, id));
+    dispatch(edit({ title: editedInput, id }));
     setEditable(!editable);
   };
 
   return (
     <Todos>
-      <Checkbox type='checkbox' checked={completed} onChange={handleToggleClick} />
+      <Checkbox
+        type='checkbox'
+        checked={completed}
+        onChange={() => dispatch(toggle(id))}
+      />
       {!editable ? (
         <h2>{title}</h2>
       ) : (
-        <form onSubmit={handleEditSubmit}>
+        <form onSubmit={(e) => handleEditSubmit(e, id)}>
           <Input
             completed={completed}
             editing={editable}
@@ -47,7 +48,7 @@ const Todo = ({ title, id, completed }) => {
       <EditButton onClick={() => setEditable(!editable)}>
         <GrEdit />
       </EditButton>
-      <DeleteButton onClick={handleDelete}>
+      <DeleteButton onClick={() => dispatch(remove(id))}>
         <IoTrashBin />
       </DeleteButton>
     </Todos>

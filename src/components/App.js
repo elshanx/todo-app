@@ -2,12 +2,15 @@ import '../index.css';
 import { Container } from '../common';
 import AddTodo from './AddTodo';
 import Todolist from './Todolist';
+import { TodoProvider } from '../Providers/TodoContext';
 
 const App = () => (
-  <Container>
-    <AddTodo />
-    <Todolist />
-  </Container>
+  <TodoProvider>
+    <Container>
+      <AddTodo />
+      <Todolist />
+    </Container>
+  </TodoProvider>
 );
 
 export default App;

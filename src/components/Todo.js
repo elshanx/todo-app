@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { GrEdit } from 'react-icons/gr';
 import { IoTrashBin } from 'react-icons/io5';
+import { useTodo } from '../Providers/TodoContext';
 
 import {
   Input,
@@ -11,29 +11,48 @@ import {
   EditButton,
   AddButton,
 } from '../common';
-import { deleteTodo, editTodo, toggleTodo } from '../redux/actions';
 
 const Todo = ({ title, id, completed }) => {
+  const [todos, setTodos] = useTodo();
   const [editable, setEditable] = useState(false);
   const [editedInput, setEditedInput] = useState([title]);
-  const dispatch = useDispatch();
 
-  const handleToggleClick = () => dispatch(toggleTodo(id));
-  const handleDelete = () => dispatch(deleteTodo(id));
+  const handleToggleClick = () => {
+    todos.map((todo) => {
+      if (todo.id === id)
+        return setTodos([...todos], (todo.completed = !todo.completed));
+      return todo;
+    });
+  };
 
-  const handleEditSubmit = (e) => {
+  const handleDelete = (id) =>
+    setTodos(todos.filter((todo) => todo.id !== id));
+
+  const editTodo = (id) => {
+    todos.map((todo) => {
+      if (todo.id === id)
+        return setTodos([...todos], (todo.title = editedInput));
+      return todo;
+    });
+  };
+
+  const handleEditSubmit = (e, id) => {
     e.preventDefault();
-    dispatch(editTodo(editedInput, id));
+    editTodo(id);
     setEditable(!editable);
   };
 
   return (
     <Todos>
-      <Checkbox type='checkbox' checked={completed} onChange={handleToggleClick} />
+      <Checkbox
+        type='checkbox'
+        checked={completed}
+        onChange={handleToggleClick}
+      />
       {!editable ? (
         <h2>{title}</h2>
       ) : (
-        <form onSubmit={handleEditSubmit}>
+        <form onSubmit={(e) => handleEditSubmit(e, id)}>
           <Input
             completed={completed}
             editing={editable}
@@ -47,7 +66,7 @@ const Todo = ({ title, id, completed }) => {
       <EditButton onClick={() => setEditable(!editable)}>
         <GrEdit />
       </EditButton>
-      <DeleteButton onClick={handleDelete}>
+      <DeleteButton onClick={() => handleDelete(id)}>
         <IoTrashBin />
       </DeleteButton>
     </Todos>

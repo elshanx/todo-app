@@ -1,8 +1,8 @@
-import { useSelector } from 'react-redux';
 import Todo from './Todo';
+import { useTodo } from '../Providers/TodoContext';
 
 const Todolist = () => {
-  const { todos } = useSelector((state) => state.todos);
+  const [todos] = useTodo();
 
   return todos.map((todo) => <Todo key={todo.id} {...todo} />);
 };

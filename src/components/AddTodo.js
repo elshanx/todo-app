@@ -1,34 +1,32 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 
 import { Input, AddButton } from '../common';
-import { addTodo } from '../redux/actions';
+import { useTodo } from '../Providers/TodoContext';
 
 const AddTodo = () => {
   const [inputValue, setInputValue] = useState('');
-  const dispatch = useDispatch();
+  const [todos, setTodos] = useTodo();
 
   const addTodoOnSubmit = (e) => {
     e.preventDefault();
     if (!inputValue.trim().length > 0) return;
-    dispatch(addTodo(uuid(), inputValue));
+    const newTodo = { id: uuid(), title: inputValue, completed: false };
+    setTodos([...todos, newTodo]);
     setInputValue('');
   };
 
   return (
-    <div>
-      <form onSubmit={addTodoOnSubmit}>
-        <Input
-          type='text'
-          placeholder='add todo..'
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          autoFocus
-        />
-        <AddButton disabled={!inputValue}>Add</AddButton>
-      </form>
-    </div>
+    <form onSubmit={addTodoOnSubmit}>
+      <Input
+        type='text'
+        placeholder='add todo..'
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        autoFocus
+      />
+      <AddButton disabled={!inputValue}>Add</AddButton>
+    </form>
   );
 };
 

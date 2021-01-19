@@ -24,7 +24,7 @@ export const AddButton = styled.button`
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
   cursor: pointer;
   border: none;
-  outline: none; // it doesnt work (in chrome) for some reason?
+  outline: none;
 
   &:disabled {
     background: #b0a8b9;
@@ -38,12 +38,6 @@ export const Input = styled.input`
   margin: 1rem;
   border: 1px solid #8869e2ba;
   border-radius: 5px;
-
-  ${({ editing }) =>
-    editing &&
-    `
-    font-size: 1.2rem;
-  `}
 `;
 
 export const Todos = styled.div`
@@ -71,17 +65,6 @@ export const DeleteButton = styled.button`
   border: none;
   cursor: pointer;
   font-size: 2rem;
-`;
-
-export const Text = styled.p`
-  padding: 10px;
-  ${({ completed }) =>
-    completed &&
-    `
-      font-style: italic;
-      color: #4444;
-      text-decoration: line-through;
-    `};
 `;
 
 export const EditButton = styled.button`

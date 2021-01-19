@@ -1,11 +1,9 @@
 import { useState, createContext, useContext } from 'react';
 
-const TodoContext = createContext();
+const TodoContext = createContext<any>(null);
 
-export const useTodo = () => useContext(TodoContext);
-
-export const TodoProvider = ({ children }) => {
-  const todos = useState([
+export const TodoProvider: React.FC = ({ children }) => {
+  const todos = useState<ITodo[]>([
     {
       id: 0,
       title: 'Learn React Redux',
@@ -42,3 +40,5 @@ export const TodoProvider = ({ children }) => {
     <TodoContext.Provider value={todos}>{children}</TodoContext.Provider>
   );
 };
+
+export const useTodo = () => useContext(TodoContext);

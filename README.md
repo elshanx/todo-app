@@ -6,4 +6,4 @@
   * [x] implemented Reduxjs
 * [x] add editable todos
 * [x] fetch todos from some API
-* [ ] add typescript
+* [x] add typescript
